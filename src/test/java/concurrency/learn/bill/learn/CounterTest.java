@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class CounterTest {
 	@Test
-	public void reentrantReadWriteLockDemo() {
+	public void stampedLockDemo() {
 		Counter counter = new Counter();
 		ExecutorService executor = Executors.newFixedThreadPool(4);
 
@@ -18,9 +18,9 @@ public class CounterTest {
 		executor.submit(counter::getCount);
 		executor.submit(counter::getCount);
 		executor.submit(counter::getCount);
-		
+
 		sleep(1);
-		executor.submit(() -> counter.setCount(20));
+		executor.submit(() -> counter.setCount(40));
 		executor.submit(counter::getCount);
 		executor.submit(counter::getCount);
 		executor.submit(counter::getCount);
