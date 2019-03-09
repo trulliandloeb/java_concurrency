@@ -25,7 +25,9 @@ public class Counter {
 	public void setCount(int c) {
 		lock.writeLock().lock();
 		try {
-			sleep(1);
+			System.out.println("Time: " + System.currentTimeMillis() + " Count: " + count + " Thread: "
+					+ Thread.currentThread().getName());
+			sleep(2);
 			this.count = c;
 		} finally {
 			lock.writeLock().unlock();
