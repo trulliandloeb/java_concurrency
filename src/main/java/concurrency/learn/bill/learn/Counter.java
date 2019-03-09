@@ -14,7 +14,7 @@ public class Counter {
 		lock.readLock().lock();
 		try {
 			System.out.println("Time: " + System.currentTimeMillis() + " Count: " + count + " Thread: "
-					+ Thread.currentThread().getName());
+					+ Thread.currentThread().getName() + " Type: read");
 			sleep(2);
 			return count;
 		} finally {
@@ -26,7 +26,7 @@ public class Counter {
 		lock.writeLock().lock();
 		try {
 			System.out.println("Time: " + System.currentTimeMillis() + " Count: " + count + " Thread: "
-					+ Thread.currentThread().getName());
+					+ Thread.currentThread().getName() + " Type: write");
 			sleep(2);
 			this.count = c;
 		} finally {
