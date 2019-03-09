@@ -32,4 +32,23 @@ public class Counter {
 			sl.unlockWrite(stamp);
 		}
 	}
+
+	public int getCountOptimistic() {
+		long stamp = sl.tryOptimisticRead();
+		int c = this.count;
+		if (sl.validate(stamp)) {
+			System.out.println("Time: " + System.currentTimeMillis() + " Count: " + count + " Thread: "
+					+ Thread.currentThread().getName() + " Type: optimistic read");
+			return c;
+		} else {
+			stamp = sl.readLock();
+			try {
+				System.out.println("Time: " + System.currentTimeMillis() + " Count: " + count + " Thread: "
+						+ Thread.currentThread().getName() + " Type: read");
+				return count;
+			} finally {
+				sl.unlockRead(stamp);
+			}
+		}
+	}
 }
