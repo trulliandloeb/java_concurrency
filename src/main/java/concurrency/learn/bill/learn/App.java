@@ -1,4 +1,4 @@
-package stream.learn.bill.learn;
+package concurrency.learn.bill.learn;
 
 /**
  * Hello world!

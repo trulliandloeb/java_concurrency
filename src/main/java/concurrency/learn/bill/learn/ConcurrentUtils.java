@@ -1,4 +1,4 @@
-package stream.learn.bill.learn;
+package concurrency.learn.bill.learn;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;

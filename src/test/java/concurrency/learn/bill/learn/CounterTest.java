@@ -1,12 +1,14 @@
-package stream.learn.bill.learn;
+package concurrency.learn.bill.learn;
 
-import static stream.learn.bill.learn.ConcurrentUtils.*;
+import static concurrency.learn.bill.learn.ConcurrentUtils.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
+
+import concurrency.learn.bill.learn.Counter;
 
 public class CounterTest
 
