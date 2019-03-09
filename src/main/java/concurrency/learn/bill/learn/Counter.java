@@ -1,22 +1,34 @@
 package concurrency.learn.bill.learn;
 
-import java.util.concurrent.locks.ReentrantLock;
+import static concurrency.learn.bill.learn.ConcurrentUtils.sleep;
+
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Counter {
 	private int count = 0;
 
-	private ReentrantLock lock = new ReentrantLock();
+	private ReadWriteLock lock = new ReentrantReadWriteLock();
 
 	public int getCount() {
-		return count;
+		lock.readLock().lock();
+		try {
+			System.out.println("Time: " + System.currentTimeMillis() + " Count: " + count + " Thread: "
+					+ Thread.currentThread().getName());
+			sleep(2);
+			return count;
+		} finally {
+			lock.readLock().unlock();
+		}
 	}
 
-	public void increment() {
-		lock.lock();
+	public void setCount(int c) {
+		lock.writeLock().lock();
 		try {
-			++count;
+			sleep(1);
+			this.count = c;
 		} finally {
-			lock.unlock();
+			lock.writeLock().unlock();
 		}
 	}
 }
