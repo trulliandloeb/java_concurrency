@@ -14,7 +14,7 @@ public class CounterTest
 
 {
 	@Test
-	public void incrementWith2() {
+	public void incrementWith4Threads() {
 		Counter counter = new Counter();
 		ExecutorService executor = Executors.newFixedThreadPool(4);
 

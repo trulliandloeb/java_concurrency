@@ -8,6 +8,8 @@ public class Counter {
 	}
 
 	public void increment() {
-		++count;
+		synchronized (this) {
+			++count;
+		}
 	}
 }
