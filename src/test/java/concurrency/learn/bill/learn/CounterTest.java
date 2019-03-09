@@ -15,7 +15,12 @@ public class CounterTest {
 		ExecutorService executor = Executors.newFixedThreadPool(4);
 
 		executor.submit(() -> counter.setCount(10));
-
+		executor.submit(counter::getCount);
+		executor.submit(counter::getCount);
+		executor.submit(counter::getCount);
+		
+		sleep(1);
+		executor.submit(() -> counter.setCount(20));
 		executor.submit(counter::getCount);
 		executor.submit(counter::getCount);
 		executor.submit(counter::getCount);
