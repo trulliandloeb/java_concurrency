@@ -4,8 +4,10 @@ import static concurrency.learn.bill.learn.ConcurrentUtils.sleep;
 import static concurrency.learn.bill.learn.ConcurrentUtils.stop;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -122,5 +124,45 @@ public class DemoTest {
 		System.out.println(accumulator.getThenReset());
 
 		assertTrue(true);
+	}
+
+	@Test
+	public void concurrentHashMapDemo() {
+//		System.out.println(ForkJoinPool.getCommonPoolParallelism());
+		ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+		map.put("foo", "bar");
+		map.put("han", "solo");
+		map.put("r2", "d2");
+		map.put("c3", "p0");
+		map.put("luke", "skywalker");
+		map.put("bb", "8");
+		map.put("darth", "vader");
+		map.put("millennium ", "falcon");
+
+		map.forEach(1, (key, value) -> System.out.printf("key: %s; value: %s; thread: %s\n", key, value,
+				Thread.currentThread().getName()));
+
+		System.out.println("==================");
+
+		String result = map.search(1, (key, value) -> {
+			System.out.println(Thread.currentThread().getName());
+			if ("foo".equals(key)) {
+				return value;
+			}
+			return null;
+		});
+		System.out.println("Result: " + result);
+
+		System.out.println("==================");
+
+		result = map.reduce(1, (key, value) -> {
+			System.out.println("Transform: " + Thread.currentThread().getName());
+			return key + "=" + value;
+		}, (s1, s2) -> {
+			System.out.println("Reduce: " + Thread.currentThread().getName());
+			return s1 + ", " + s2;
+		});
+
+		System.out.println("Result: " + result);
 	}
 }
