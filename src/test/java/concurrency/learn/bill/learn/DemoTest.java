@@ -15,13 +15,13 @@ public class DemoTest {
 		Instant start = Instant.now();
 		int id = 0;
 
-		Account a = new Account(id++, "a", 9999);
-		Account b = new Account(id++, "b", 9999);
-		Account c = new Account(id++, "c", 9999);
-		Account d = new Account(id++, "d", 9999);
+		Account a = new Account(id++, "a", 99999);
+		Account b = new Account(id++, "b", 99999);
+		Account c = new Account(id++, "c", 99999);
+		Account d = new Account(id++, "d", 99999);
 
 		List<Thread> threads = new ArrayList<>();
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				a.transfer(b, 1);
 			});
@@ -29,7 +29,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				b.transfer(a, 1);
 			});
@@ -37,7 +37,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				c.transfer(d, 1);
 			});
@@ -45,7 +45,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				d.transfer(c, 1);
 			});
@@ -70,10 +70,10 @@ public class DemoTest {
 	public void testNewAccount() throws InterruptedException {
 		Instant start = Instant.now();
 
-		NewAccount a = new NewAccount("a", 9999L);
-		NewAccount b = new NewAccount("b", 9999L);
-		NewAccount c = new NewAccount("c", 9999L);
-		NewAccount d = new NewAccount("d", 9999L);
+		NewAccount a = new NewAccount("a", 99999L);
+		NewAccount b = new NewAccount("b", 99999L);
+		NewAccount c = new NewAccount("c", 99999L);
+		NewAccount d = new NewAccount("d", 99999L);
 
 		NewAccount.map.put(a.getName(), a.getBalance());
 		NewAccount.map.put(b.getName(), b.getBalance());
@@ -81,7 +81,7 @@ public class DemoTest {
 		NewAccount.map.put(d.getName(), d.getBalance());
 
 		List<Thread> threads = new ArrayList<>();
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				a.transfer(b, 1L);
 			});
@@ -89,7 +89,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				b.transfer(a, 1L);
 			});
@@ -97,7 +97,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				c.transfer(d, 1L);
 			});
@@ -105,7 +105,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				d.transfer(c, 1L);
 			});
@@ -135,13 +135,13 @@ public class DemoTest {
 	public void testNewAccountWithLongAdder() throws InterruptedException {
 		Instant start = Instant.now();
 
-		NewAccountWithLongAdder a = new NewAccountWithLongAdder("a", 9999);
-		NewAccountWithLongAdder b = new NewAccountWithLongAdder("b", 9999);
-		NewAccountWithLongAdder c = new NewAccountWithLongAdder("c", 9999);
-		NewAccountWithLongAdder d = new NewAccountWithLongAdder("d", 9999);
+		NewAccountWithLongAdder a = new NewAccountWithLongAdder("a", 99999);
+		NewAccountWithLongAdder b = new NewAccountWithLongAdder("b", 99999);
+		NewAccountWithLongAdder c = new NewAccountWithLongAdder("c", 99999);
+		NewAccountWithLongAdder d = new NewAccountWithLongAdder("d", 99999);
 		
 		List<Thread> threads = new ArrayList<>();
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				a.transfer(b, 1L);
 			});
@@ -149,15 +149,15 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
-				b.transfer(a, 1L);
+				b.transfer(c, 1L);
 			});
 			threads.add(t);
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
 				c.transfer(d, 1L);
 			});
@@ -165,9 +165,9 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 9999; i++) {
+		for (int i = 0; i < 99999; i++) {
 			Thread t = new Thread(() -> {
-				d.transfer(c, 1L);
+				d.transfer(a, 1L);
 			});
 			threads.add(t);
 			t.start();

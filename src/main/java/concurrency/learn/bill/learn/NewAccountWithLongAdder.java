@@ -30,11 +30,11 @@ public class NewAccountWithLongAdder {
 
 	public void transfer(NewAccountWithLongAdder target, long amount) {
 		this.balance.add(-amount);
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(1);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		target.balance.add(amount);
 	}
 }

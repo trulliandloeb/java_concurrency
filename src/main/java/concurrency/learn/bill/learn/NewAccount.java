@@ -33,11 +33,11 @@ public class NewAccount {
 
 	public void transfer(NewAccount target, Long amount) {
 		map.compute(this.name, (k, v) -> v - amount);
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(1);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		map.compute(target.name, (k, v) -> v + amount);
 	}
 }
