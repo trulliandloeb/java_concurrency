@@ -24,22 +24,37 @@ public class Account {
 	}
 
 	public void transfer(Account target, long amount) {
-		Account first = this;
-		Account second = target;
-		if (this.getId() > target.getId()) {
-			first = target;
-			second = this;
+//		Account first = this;
+//		Account second = target;
+//		if (this.getId() > target.getId()) {
+//			first = target;
+//			second = this;
+//		}
+
+		synchronized (this) {
+			this.balance -= amount;
 		}
-		synchronized (first) {
-			synchronized (second) {
-				this.balance -= amount;
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				target.balance += amount;
-			}
+
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+
+		synchronized (target) {
+			target.balance += amount;
+		}
+
+//		synchronized (first) {
+//			synchronized (second) {
+//				this.balance -= amount;
+//				try {
+//					Thread.sleep(1);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//				target.balance += amount;
+//			}
+//		}
 	}
 }

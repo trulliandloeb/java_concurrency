@@ -15,13 +15,13 @@ public class DemoTest {
 		Instant start = Instant.now();
 		int id = 0;
 
-		Account a = new Account(id++, "a", 5000);
-		Account b = new Account(id++, "b", 5000);
-		Account c = new Account(id++, "c", 5000);
-		Account d = new Account(id++, "d", 5000);
+		Account a = new Account(id++, "a", 9999);
+		Account b = new Account(id++, "b", 9999);
+		Account c = new Account(id++, "c", 9999);
+		Account d = new Account(id++, "d", 9999);
 
 		List<Thread> threads = new ArrayList<>();
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				a.transfer(b, 1);
 			});
@@ -29,7 +29,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				b.transfer(a, 1);
 			});
@@ -37,7 +37,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				c.transfer(d, 1);
 			});
@@ -45,7 +45,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				d.transfer(c, 1);
 			});
@@ -70,10 +70,10 @@ public class DemoTest {
 	public void testNewAccount() throws InterruptedException {
 		Instant start = Instant.now();
 
-		NewAccount a = new NewAccount("a", 5000L);
-		NewAccount b = new NewAccount("b", 5000L);
-		NewAccount c = new NewAccount("c", 5000L);
-		NewAccount d = new NewAccount("d", 5000L);
+		NewAccount a = new NewAccount("a", 9999L);
+		NewAccount b = new NewAccount("b", 9999L);
+		NewAccount c = new NewAccount("c", 9999L);
+		NewAccount d = new NewAccount("d", 9999L);
 
 		NewAccount.map.put(a.getName(), a.getBalance());
 		NewAccount.map.put(b.getName(), b.getBalance());
@@ -81,7 +81,7 @@ public class DemoTest {
 		NewAccount.map.put(d.getName(), d.getBalance());
 
 		List<Thread> threads = new ArrayList<>();
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				a.transfer(b, 1L);
 			});
@@ -89,7 +89,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				b.transfer(a, 1L);
 			});
@@ -97,7 +97,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				c.transfer(d, 1L);
 			});
@@ -105,7 +105,7 @@ public class DemoTest {
 			t.start();
 		}
 
-		for (int i = 0; i < 5000; i++) {
+		for (int i = 0; i < 9999; i++) {
 			Thread t = new Thread(() -> {
 				d.transfer(c, 1L);
 			});
@@ -121,12 +121,67 @@ public class DemoTest {
 		b.setBalance(NewAccount.map.get(b.getName()));
 		c.setBalance(NewAccount.map.get(c.getName()));
 		d.setBalance(NewAccount.map.get(d.getName()));
-		
+
 		out.println(a.getBalance());
 		out.println(b.getBalance());
 		out.println(c.getBalance());
 		out.println(d.getBalance());
 		out.println(a.getBalance() + b.getBalance() + c.getBalance() + d.getBalance());
+
+		out.println("Total cost " + Duration.between(start, Instant.now()).toMillis() + "ms.");
+	}
+
+	@Test
+	public void testNewAccountWithLongAdder() throws InterruptedException {
+		Instant start = Instant.now();
+
+		NewAccountWithLongAdder a = new NewAccountWithLongAdder("a", 9999);
+		NewAccountWithLongAdder b = new NewAccountWithLongAdder("b", 9999);
+		NewAccountWithLongAdder c = new NewAccountWithLongAdder("c", 9999);
+		NewAccountWithLongAdder d = new NewAccountWithLongAdder("d", 9999);
+		
+		List<Thread> threads = new ArrayList<>();
+		for (int i = 0; i < 9999; i++) {
+			Thread t = new Thread(() -> {
+				a.transfer(b, 1L);
+			});
+			threads.add(t);
+			t.start();
+		}
+
+		for (int i = 0; i < 9999; i++) {
+			Thread t = new Thread(() -> {
+				b.transfer(a, 1L);
+			});
+			threads.add(t);
+			t.start();
+		}
+
+		for (int i = 0; i < 9999; i++) {
+			Thread t = new Thread(() -> {
+				c.transfer(d, 1L);
+			});
+			threads.add(t);
+			t.start();
+		}
+
+		for (int i = 0; i < 9999; i++) {
+			Thread t = new Thread(() -> {
+				d.transfer(c, 1L);
+			});
+			threads.add(t);
+			t.start();
+		}
+
+		for (Thread t : threads) {
+			t.join();
+		}
+		
+		out.println(a.getBalance().longValue());
+		out.println(b.getBalance().longValue());
+		out.println(c.getBalance().longValue());
+		out.println(d.getBalance().longValue());
+//		out.println(a.getBalance() + b.getBalance() + c.getBalance() + d.getBalance());
 
 		out.println("Total cost " + Duration.between(start, Instant.now()).toMillis() + "ms.");
 	}

@@ -34,7 +34,7 @@ public class NewAccount {
 	public void transfer(NewAccount target, Long amount) {
 		map.compute(this.name, (k, v) -> v - amount);
 		try {
-			Thread.sleep(1);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
